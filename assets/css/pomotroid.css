@@ -1,0 +1,244 @@
+/* ============================================================
+   TIMO — Pomotroid widget
+   Work and Break use clearly different color languages:
+   Work  = cool indigo/violet (focus)
+   Break = warm amber/orange  (rest)
+   ============================================================ */
+
+.pomo {
+  position: relative;
+  text-align: center;
+  padding: 18px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface-2);
+  overflow: hidden;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transition: background-color var(--dur) var(--ease), border-color var(--dur) var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+
+/* Soft mode-colored glow behind the widget */
+.pomo::before {
+  content: '';
+  position: absolute;
+  inset: -60% -30% auto -30%;
+  height: 160%;
+  background: radial-gradient(50% 50% at 50% 40%, var(--pomo-glow), transparent 70%);
+  pointer-events: none;
+  opacity: 0.55;
+  transition: background 0.6s var(--ease), opacity 0.6s var(--ease);
+}
+
+.pomo > * {
+  position: relative;
+}
+
+.pomo.mode-work {
+  --pomo: #6366f1;
+  --pomo-2: #8b5cf6;
+  --pomo-glow: rgba(99, 102, 241, 0.22);
+  --pomo-ink: #4f46e5;
+  border-color: rgba(99, 102, 241, 0.35);
+}
+
+.pomo.mode-break {
+  --pomo: #f59e0b;
+  --pomo-2: #fb923c;
+  --pomo-glow: rgba(245, 158, 11, 0.24);
+  --pomo-ink: #d97706;
+  border-color: rgba(245, 158, 11, 0.38);
+}
+
+html[data-theme='dark'] .pomo.mode-work {
+  --pomo: #818cf8;
+  --pomo-2: #a78bfa;
+  --pomo-glow: rgba(129, 140, 248, 0.24);
+  --pomo-ink: #a5b4fc;
+}
+html[data-theme='dark'] .pomo.mode-break {
+  --pomo: #fbbf24;
+  --pomo-2: #fb923c;
+  --pomo-glow: rgba(251, 191, 36, 0.2);
+  --pomo-ink: #fcd34d;
+}
+
+/* ---------- Mode chip ---------- */
+.pomo .mode {
+  display: inline-flex;
+  align-self: center;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: #fff;
+  background: linear-gradient(135deg, var(--pomo), var(--pomo-2));
+  box-shadow: 0 6px 16px -6px var(--pomo);
+  transition: background 0.5s var(--ease), box-shadow 0.5s var(--ease), color 0.4s var(--ease);
+}
+
+/* Pulsing dot while the timer is actually running */
+.pomo.running .mode::after {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: pomo-pulse 1.6s ease-in-out infinite;
+}
+@keyframes pomo-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.35;
+    transform: scale(0.7);
+  }
+}
+
+/* ---------- Ring ---------- */
+.pomo .ring {
+  display: block;
+  width: clamp(130px, 26vh, 280px);
+  height: clamp(130px, 26vh, 280px);
+  margin: 14px auto 6px;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.12));
+}
+.pomo .ring .track {
+  stroke: color-mix(in srgb, var(--pomo) 16%, var(--surface-2));
+}
+.pomo .ring .arc {
+  stroke: url(#pomoGrad);
+  transition: stroke-dashoffset 1s linear;
+}
+/* stop-color must be set via CSS so var() resolves reliably */
+.pomo .ring .grad-from {
+  stop-color: var(--pomo);
+}
+.pomo .ring .grad-to {
+  stop-color: var(--pomo-2);
+}
+
+/* ---------- Time ---------- */
+.pomo .time {
+  font-size: clamp(30px, 4.4vh, 44px);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+  color: var(--text);
+  transition: color 0.5s var(--ease);
+}
+.pomo .state {
+  min-height: 18px;
+  margin-top: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--pomo-ink);
+  transition: color 0.5s var(--ease);
+}
+
+/* ---------- Controls ---------- */
+.pomo .controls {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin: 14px 0 4px;
+  flex-wrap: wrap;
+}
+.pomo .btn {
+  height: 38px;
+  padding: 0 16px;
+  font-size: 13px;
+}
+.pomo .btn.primary {
+  background: linear-gradient(135deg, var(--pomo), var(--pomo-2));
+  box-shadow: 0 6px 18px -6px var(--pomo);
+  min-width: 92px;
+}
+.pomo .btn.primary:hover {
+  box-shadow: 0 12px 26px -8px var(--pomo);
+}
+
+/* ---------- Settings ---------- */
+.pomo .settings {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed var(--border);
+}
+.pomo .settings label {
+  flex: 1;
+  max-width: 120px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--text-2);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.pomo .settings input {
+  width: 100%;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: center;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease),
+    background-color var(--dur) var(--ease);
+}
+.pomo .settings input:focus {
+  outline: none;
+  border-color: var(--pomo);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--pomo) 20%, transparent);
+}
+
+/* ---------- Short viewports ----------
+   Same reason as the sidebar rule in style.css: shrink the widget so its
+   settings row is never pushed out of the card on low-height monitors. */
+@media (max-height: 840px) {
+  .pomo {
+    padding: 14px 14px;
+  }
+  .pomo .mode {
+    padding: 4px 12px;
+    font-size: 11.5px;
+  }
+  .pomo .ring {
+    width: clamp(100px, 18vh, 165px);
+    height: clamp(100px, 18vh, 165px);
+    margin: 10px auto 4px;
+  }
+  .pomo .time {
+    font-size: 32px;
+  }
+  .pomo .controls {
+    margin: 11px 0 3px;
+  }
+  .pomo .btn {
+    height: 34px;
+    padding: 0 14px;
+  }
+  .pomo .settings {
+    margin-top: 10px;
+    padding-top: 10px;
+  }
+  .pomo .settings input {
+    height: 32px;
+  }
+}
