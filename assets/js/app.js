@@ -85,7 +85,7 @@
         return { ok: false, data: [] };
       })
       .then(function (res) {
-        if (res && res.ok === false && res.error) toast(res.error);
+        if (res && res.ok === false && res.error) toast(t('error') + ': ' + t(res.error));
         return res;
       });
   }
@@ -468,8 +468,82 @@
     });
   }
 
+  // ---------- Data export / import ----------
+  function backupStamp() {
+    var d = new Date();
+    function p(n) { return (n < 10 ? '0' : '') + n; }
+    return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()) + '-' + p(d.getHours()) + p(d.getMinutes());
+  }
+
+  function dataMenu() {
+    return [
+      { icon: '⬇️', label: t('export_json'), onSelect: exportData },
+      { icon: '⬆️', label: t('import_json'), onSelect: importData }
+    ];
+  }
+
+  function exportData() {
+    fetch(API + 'backup.php')
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.blob();
+      })
+      .then(function (blob) {
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = url;
+        a.download = 'timo-backup-' + backupStamp() + '.json';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+        toast(t('export_done'));
+      })
+      .catch(function (err) { toast(t('error') + ': ' + err.message); });
+  }
+
+  function importData() {
+    openModal({
+      title: t('import_title'),
+      submitText: t('import'),
+      fields: [
+        {
+          name: 'file', label: t('import_file'), type: 'file', required: true,
+          accept: 'application/json,.json', hint: t('import_file_hint')
+        },
+        {
+          name: 'mode', label: t('import_mode'), type: 'select', value: 'merge',
+          options: [
+            { value: 'merge', label: t('import_mode_merge') },
+            { value: 'replace', label: t('import_mode_replace') }
+          ]
+        }
+      ]
+    }).then(function (fd) {
+      if (!fd) return null;
+      if (fd.get('mode') === 'replace') {
+        return confirmBox(t('confirm_import_replace'), t('import_title')).then(function (ok) {
+          if (!ok) return null;
+          return fetchJSON(API + 'backup.php', { method: 'POST', body: fd });
+        });
+      }
+      return fetchJSON(API + 'backup.php', { method: 'POST', body: fd });
+    }).then(function (res) {
+      if (res && res.ok) {
+        toast(t('import_done'));
+        state.appId = 0;
+        state.folderId = 0;
+        loadApps(); loadFolders(); loadTasks();
+      }
+    });
+  }
+
   // ---------- Forms ----------
   $('appAdd').addEventListener('click', addApp);
+  $('dataBtn').addEventListener('click', function () {
+    var r = this.getBoundingClientRect();
+    TimoMenu.open(r.left, r.bottom + 6, dataMenu());
+  });
   $('taskSort').addEventListener('click', function () {
     var r = this.getBoundingClientRect();
     TimoMenu.open(r.left, r.bottom + 6, sortMenu());

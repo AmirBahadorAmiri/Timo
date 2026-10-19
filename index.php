@@ -33,6 +33,7 @@ $otherLang = $lang === 'fa' ? 'en' : 'fa';
   </div>
   <div class="top-actions">
     <a class="btn ghost" href="?lang=<?= $otherLang ?>"><?= $lang === 'fa' ? 'EN' : 'فا' ?></a>
+    <button type="button" class="btn ghost" id="dataBtn" title="<?= htmlspecialchars($t['import_export']) ?>">💾<span class="lbl"><?= htmlspecialchars($t['import_export']) ?></span></button>
     <button class="btn ghost icon-btn" id="themeBtn" type="button" title="Theme">🌙</button>
   </div>
 </header>

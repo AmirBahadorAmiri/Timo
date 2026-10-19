@@ -26,7 +26,8 @@ function openModal(cfg) {
     } else if (f.type === 'select') {
       control = '<select id="' + id + '" name="' + f.name + '"></select>';
     } else if (f.type === 'file') {
-      control = '<input id="' + id + '" type="file" name="' + f.name + '" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml">';
+      var accept = f.accept || 'image/png,image/jpeg,image/gif,image/webp,image/svg+xml';
+      control = '<input id="' + id + '" type="file" name="' + f.name + '" accept="' + accept + '">';
     } else if (f.type === 'checkbox') {
       control = '<input id="' + id + '" type="checkbox" name="' + f.name + '">';
     } else {
@@ -101,7 +102,7 @@ function openModal(cfg) {
   });
 }
 
-function confirmBox(message) {
+function confirmBox(message, title) {
   return new Promise(function (resolve) {
     var dlg = document.createElement('dialog');
     dlg.className = 'modal';
@@ -115,7 +116,7 @@ function confirmBox(message) {
         '</footer>' +
       '</div>';
     document.body.appendChild(dlg);
-    dlg.querySelector('h3').textContent = t('confirm_delete');
+    dlg.querySelector('h3').textContent = title || t('confirm_delete');
     dlg.querySelector('.confirm-msg').textContent = message || '';
     dlg.querySelector('[data-no]').textContent = t('cancel');
     dlg.querySelector('[data-yes]').textContent = t('delete');
