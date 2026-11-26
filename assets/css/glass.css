@@ -1,0 +1,139 @@
+/* ============================================================
+   Timo — liquid glass skin
+   Loaded last so it can frost every surface over the wallpaper.
+   ============================================================ */
+
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.26);
+  --glass-bg-2: rgba(255, 255, 255, 0.38);
+  --glass-bg-3: rgba(255, 255, 255, 0.22);
+  --glass-line: rgba(255, 255, 255, 0.42);
+  --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+  --glass-blur: 22px;
+}
+
+html[data-theme='dark'] {
+  --glass-bg: rgba(24, 30, 46, 0.40);
+  --glass-bg-2: rgba(36, 44, 64, 0.50);
+  --glass-bg-3: rgba(24, 30, 46, 0.28);
+  --glass-line: rgba(255, 255, 255, 0.16);
+  --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+}
+
+/* ---------- Wallpaper ---------- */
+html,
+body {
+  background-color: transparent;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: url('../background/mountain_1.jpg') center / cover fixed;
+  filter: brightness(1.35) saturate(1.1);
+}
+body::before {
+  opacity: 0.25;
+}
+
+/* ---------- Frost every surface ---------- */
+.topbar,
+.panel,
+.card,
+.cal,
+.cal-detail,
+.col,
+.app-rail,
+.item,
+.cal-cell,
+.btn.ghost,
+.cal-nav-btn,
+.cal-today,
+.ctx-menu,
+.toast,
+.modal-form,
+.modal-foot {
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+}
+
+.topbar {
+  background: var(--glass-bg-2);
+  border-bottom-color: var(--glass-line);
+  box-shadow: var(--glass-shadow);
+}
+
+.panel {
+  background: var(--glass-bg);
+  border-color: var(--glass-line);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+}
+
+.card,
+.cal,
+.cal-detail,
+.col,
+.app-rail {
+  background: var(--glass-bg-3);
+  border-color: var(--glass-line);
+  box-shadow: var(--glass-inner);
+}
+
+.item,
+.cal-cell,
+.btn.ghost,
+.cal-nav-btn,
+.cal-today {
+  background: var(--glass-bg-2);
+  border-color: var(--glass-line);
+}
+
+.item.active {
+  background: color-mix(in srgb, var(--accent) 26%, transparent);
+}
+
+.cal-cell.is-holiday {
+  background: rgba(239, 68, 68, 0.20);
+}
+.cal-cell.is-selected {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: var(--glass-line);
+}
+
+.ctx-menu,
+.toast,
+.modal-form {
+  background: var(--glass-bg-2);
+  border-color: var(--glass-line);
+  box-shadow: var(--glass-inner), var(--glass-shadow);
+}
+.modal-foot {
+  background: var(--glass-bg-3);
+  border-top-color: var(--glass-line);
+}
+.modal input[type='text'],
+.modal input[type='number'],
+.modal textarea,
+.modal select,
+.row input {
+  background: var(--glass-bg-3);
+  border-color: var(--glass-line);
+  color: var(--text);
+}
+.modal input[type='file'] {
+  background: var(--glass-bg-3);
+  border-color: var(--glass-line);
+}
+
+/* Keep the accent-filled buttons solid and readable. */
+.btn:not(.ghost),
+.add-task,
+.cd-chip,
+.badge {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
