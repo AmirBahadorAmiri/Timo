@@ -14,9 +14,9 @@
 }
 
 html[data-theme='dark'] {
-  --glass-bg: rgba(24, 30, 46, 0.40);
-  --glass-bg-2: rgba(36, 44, 64, 0.50);
-  --glass-bg-3: rgba(24, 30, 46, 0.28);
+  --glass-bg: rgba(24, 30, 46, 0.22);
+  --glass-bg-2: rgba(36, 44, 64, 0.30);
+  --glass-bg-3: rgba(24, 30, 46, 0.14);
   --glass-line: rgba(255, 255, 255, 0.16);
   --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.09);
   --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);

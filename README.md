@@ -45,6 +45,7 @@ This release moves Timo off XAMPP and into Chrome, and replaces the Pomodoro tim
 *   Official holidays (Nowruz, Republic Day, Imam Khomeini's passing, Victory of the Revolution, Eid al-Fitr, Eid al-Adha, Eid al-Ghadir, Ashura, Fridays) and national/religious occasions are marked with coloured dots.
 
 ### 🎨 Interface
+*   Mountain wallpaper with frosted, translucent panels and glass controls.
 *   Bilingual FA/EN with full RTL support and bundled Vazirmatn font.
 *   Light / dark theme with animated colour tokens.
 *   Full browser page as the new tab, with no popup size limit.

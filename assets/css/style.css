@@ -730,8 +730,10 @@ html[dir='rtl'] .item.active {
   align-self: flex-start;
   width: 28px;
   height: 28px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   margin-inline-start: 2px;
   border: 0;
   border-radius: 8px;
