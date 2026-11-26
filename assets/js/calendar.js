@@ -1,7 +1,8 @@
 // Persian calendar — Borkowski solar conversion + Umm al-Qura lunar dates.
 (function () {
-  var mount = document.getElementById('calendar');
-  if (!mount) return;
+  var mount = document.getElementById('calendarPop');
+  var trigger = document.getElementById('calendarBtn');
+  if (!mount || !trigger) return;
 
   // ---------- Solar (Jalali) conversion — Borkowski, exact for 1300–1500 SH ----------
   var BREAKS = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060,
@@ -279,9 +280,46 @@
     detailEl.innerHTML = out;
   }
 
-  function render() { renderWeek(); renderGrid(); renderDetail(); }
+  function updateTrigger() {
+    trigger.textContent = num(selected.d) + ' ' + monthName(selected.m) + ' ' + num(selected.y);
+    trigger.title = t('calendar');
+  }
+
+  function place() {
+    var r = trigger.getBoundingClientRect();
+    var w = mount.offsetWidth || 290;
+    var h = mount.offsetHeight || 460;
+    var left = Math.max(8, Math.min(r.left, window.innerWidth - w - 8));
+    var top = r.bottom + 8;
+    if (top + h > window.innerHeight - 8) top = Math.max(8, r.top - h - 8);
+    mount.style.left = left + 'px';
+    mount.style.top = top + 'px';
+  }
+
+  function openPop() {
+    mount.hidden = false;
+    trigger.setAttribute('aria-expanded', 'true');
+    place();
+  }
+  function closePop() {
+    mount.hidden = true;
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  function render() { renderWeek(); renderGrid(); renderDetail(); updateTrigger(); }
 
   // ---------- Events ----------
+  trigger.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (mount.hidden) openPop(); else closePop();
+  });
+  mount.addEventListener('click', function (e) { e.stopPropagation(); });
+  document.addEventListener('click', function () { if (!mount.hidden) closePop(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && !mount.hidden) { closePop(); trigger.focus(); }
+  });
+  window.addEventListener('resize', function () { if (!mount.hidden) place(); });
+
   document.getElementById('calPrev').onclick = function () {
     view.m--; if (view.m < 1) { view.m = 12; view.y--; }
     renderGrid();
@@ -304,6 +342,7 @@
     if (cell.dataset.other === '1') { view = { y: selected.y, m: selected.m }; renderGrid(); }
     else renderGrid();
     renderDetail();
+    updateTrigger();
   });
 
   render();

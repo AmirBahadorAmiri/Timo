@@ -4,7 +4,7 @@
   if (!clock) return;
 
   var isFa = window.TIMO_LANG === 'fa';
-  var time = document.createElement('div');
+  var time = document.createElement('span');
   time.className = 'clock-time';
   clock.appendChild(time);
 

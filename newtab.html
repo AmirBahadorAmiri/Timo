@@ -13,12 +13,11 @@
 <header class="topbar">
   <div class="brand">
     <span class="logo">⏱</span>
-    <span>
-      Timo
-      <span class="sub" data-i18n="dashboard"></span>
-    </span>
+    <span>Timo</span>
   </div>
   <div class="top-actions">
+    <span id="clockBox" class="btn ghost top-clock"></span>
+    <button type="button" class="btn ghost cal-trigger" id="calendarBtn" title="" aria-expanded="false"></button>
     <button type="button" class="btn ghost" id="langBtn" title="Language">FA</button>
     <button type="button" class="btn ghost" id="dataBtn" title="Import / Export">💾<span class="lbl"></span></button>
     <button type="button" class="btn ghost icon-btn" id="themeBtn" title="Theme">🌙</button>
@@ -68,13 +67,9 @@
       </div>
     </div>
   </section>
-
-  <!-- RIGHT: clock (top) + Persian calendar (bottom) -->
-  <aside class="panel tools-panel">
-    <div id="clockBox" class="card clock-card"></div>
-    <div id="calendar"></div>
-  </aside>
 </main>
+
+<div id="calendarPop" class="cal-pop" hidden></div>
 
 <script src="assets/js/i18n.js"></script>
 <script src="assets/js/store.js"></script>

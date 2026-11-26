@@ -19,9 +19,10 @@ This release moves Timo off XAMPP and into Chrome, and replaces the Pomodoro tim
 
 *   **New tab page:** Manifest V3 `chrome_url_overrides` opens Timo whenever you open a new tab — no build step and no server; all data lives in `localStorage`.
 *   **Persian calendar:** compact Solar Hijri month grid with holidays and religious occasions; the timer and its settings are gone.
-*   **Clock simplified:** the heading, animated dot and date line are gone — the card shows time only, so the calendar becomes the single date view.
+*   **Clock in the header:** the clock and the date are now two matching buttons in the top bar; the old tools sidebar is gone, so the task board uses the full width.
+*   **Floating calendar:** the date button shows only today's date and opens the full calendar as a floating glass popover.
 *   **Two task states:** `doing` was removed; the `✓` button now reliably toggles done and a done title is struck through.
-*   **Layout & icon:** the tools column is narrower, folders and tasks share the freed width, and the toolbar icon is registered through `action.default_icon`.
+*   **Toolbar icon:** registered through `action.default_icon` so it renders correctly next to the browser's pinned extensions.
 
 ---
 
@@ -45,7 +46,8 @@ This release moves Timo off XAMPP and into Chrome, and replaces the Pomodoro tim
 *   Official holidays (Nowruz, Republic Day, Imam Khomeini's passing, Victory of the Revolution, Eid al-Fitr, Eid al-Adha, Eid al-Ghadir, Ashura, Fridays) and national/religious occasions are marked with coloured dots.
 
 ### 🎨 Interface
-*   Mountain wallpaper with frosted, translucent panels and glass controls.
+*   Mountain wallpaper with a frosted task board and button-style header controls.
+*   Clock and date sit in the top bar; clicking the date opens the calendar as a floating popover.
 *   Bilingual FA/EN with full RTL support and bundled Vazirmatn font.
 *   Light / dark theme with animated colour tokens.
 *   Full browser page as the new tab, with no popup size limit.
@@ -84,12 +86,22 @@ No XAMPP, PHP, MySQL or `npm install` step is required.
 
 ---
 
+## 📸 Screenshots
+
+The new tab dashboard with the wallpaper and glass surfaces (Persian UI, RTL):
+
+| 🖥️ New tab dashboard |
+|:---:|
+| <img width="800" alt="Timo new tab dashboard with task board and header controls" src="assets/screenshot/screencapture.png" /> |
+
+---
+
 ## 🧭 How to Use
 
 1. Click **+** in the application rail to create an application; you can attach a logo in the same dialog.
 2. Select the application, type a folder name and press **Add**, then click **+ New task** for its tasks.
 3. Use `⋯`, right-click or `✓` on a row to edit, change status or delete; `⇅` changes the sort order.
-4. In the calendar, use `‹` / `›` to move between months and **Today** to jump back; click a day to read its dates and occasions below the grid.
+4. Click the date button in the header to open the floating calendar, use `‹` / `›` to move between months and **Today** to jump back; click a day to read its dates and occasions, and press `Esc` or click outside to close.
 5. Use **💾** in the header to export a JSON backup or import one back, choosing merge or replace.
 6. `🌙` switches theme and `FA/EN` switches language; every new tab opens this same dashboard.
 

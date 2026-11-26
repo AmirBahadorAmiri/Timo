@@ -10,7 +10,8 @@
   --glass-line: rgba(255, 255, 255, 0.42);
   --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.45);
   --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
-  --glass-blur: 22px;
+  --glass-pop: rgba(255, 255, 255, 0.82);
+  --glass-blur: 16px;
 }
 
 html[data-theme='dark'] {
@@ -20,6 +21,7 @@ html[data-theme='dark'] {
   --glass-line: rgba(255, 255, 255, 0.16);
   --glass-inner: inset 0 1px 0 rgba(255, 255, 255, 0.09);
   --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
+  --glass-pop: rgba(18, 23, 36, 0.88);
 }
 
 /* ---------- Wallpaper ---------- */
@@ -40,19 +42,10 @@ body::before {
   opacity: 0.25;
 }
 
-/* ---------- Frost every surface ---------- */
-.topbar,
+/* ---------- Frost the outer surfaces; inner boxes stay plain so hover
+   transitions don't force the backdrop to re-rasterize (visible flicker). ---------- */
 .panel,
-.card,
-.cal,
-.cal-detail,
-.col,
-.app-rail,
-.item,
-.cal-cell,
-.btn.ghost,
-.cal-nav-btn,
-.cal-today,
+.cal-pop .cal,
 .ctx-menu,
 .toast,
 .modal-form,
@@ -62,15 +55,25 @@ body::before {
 }
 
 .topbar {
-  background: var(--glass-bg-2);
-  border-bottom-color: var(--glass-line);
-  box-shadow: var(--glass-shadow);
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 .panel {
   background: var(--glass-bg);
   border-color: var(--glass-line);
   box-shadow: var(--glass-inner), var(--glass-shadow);
+}
+
+/* The task board needs no extra frame around its inner boxes. */
+.panel.tasks-panel {
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
 }
 
 .card,
@@ -129,6 +132,35 @@ body::before {
   border-color: var(--glass-line);
 }
 
+/* Native select popups must follow the active theme, not the OS default. */
+.modal select option {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* Brand mark sits in the same frosted chip as the header controls. */
+.brand {
+  padding: 2px 12px;
+  border-radius: var(--radius-sm);
+  background: var(--glass-bg-2);
+}
+
+/* All header controls share one text size. */
+.top-actions .btn,
+.top-actions .btn .clock-time {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* Header controls read better without an outlined stroke. */
+.top-actions .btn.ghost {
+  box-shadow: none;
+}
+.top-actions .btn.ghost:hover {
+  box-shadow: none;
+  background: var(--glass-bg-2);
+  color: var(--text);
+}
 /* Keep the accent-filled buttons solid and readable. */
 .btn:not(.ghost),
 .add-task,
