@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Timo — داشبورد</title>
+<link rel="icon" href="icons/icon32.png">
+<link rel="stylesheet" href="assets/css/style.css">
+<link rel="stylesheet" href="assets/css/calendar.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="logo">⏱</span>
+    <span>
+      Timo
+      <span class="sub" data-i18n="dashboard"></span>
+    </span>
+  </div>
+  <div class="top-actions">
+    <button type="button" class="btn ghost" id="langBtn" title="Language">FA</button>
+    <button type="button" class="btn ghost" id="dataBtn" title="Import / Export">💾<span class="lbl"></span></button>
+    <button type="button" class="btn ghost icon-btn" id="themeBtn" title="Theme">🌙</button>
+  </div>
+</header>
+
+<main class="layout">
+  <!-- LEFT: task manager -->
+  <section class="panel tasks-panel">
+    <div class="board">
+
+      <aside class="app-rail">
+        <h2 class="rail-head">
+          <span class="dot"></span>
+          <span data-i18n="applications"></span>
+        </h2>
+        <button type="button" class="rail-add" id="appAdd" title=""><span>+</span></button>
+        <ul id="appList" class="rail-list"></ul>
+        <div class="empty rail-empty" id="appEmpty"><span class="ico">📦</span><span data-i18n="empty_apps"></span></div>
+      </aside>
+
+      <div class="cols2">
+
+        <div class="col">
+          <h2><span class="dot"></span><span data-i18n="folders"></span></h2>
+          <form id="folderForm" class="row" autocomplete="off">
+            <input name="name" data-i18n-ph="folder_name_ph" required>
+            <button class="btn" type="submit" data-i18n="add"></button>
+          </form>
+          <ul id="folderList" class="list"></ul>
+          <div class="empty" id="folderEmpty"><span class="ico">📁</span><span data-i18n="empty_folders"></span></div>
+        </div>
+
+        <div class="col tasks-col">
+          <h2><span class="dot"></span><span data-i18n="tasks"></span><span class="count" id="taskCount">0</span><button type="button" class="sort-btn" id="taskSort" title="" aria-label="">⇅</button></h2>
+          <button type="button" class="btn add-task" id="taskAdd">
+            <span aria-hidden="true">+</span><span data-i18n="new_task"></span>
+          </button>
+          <ul id="taskList" class="list"></ul>
+          <div class="empty" id="taskEmpty"><span class="ico">✅</span><span data-i18n="empty_tasks"></span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- RIGHT: clock (top) + Persian calendar (bottom) -->
+  <aside class="panel tools-panel">
+    <div id="clockBox" class="card clock-card"></div>
+    <div id="calendar"></div>
+  </aside>
+</main>
+
+<script src="assets/js/i18n.js"></script>
+<script src="assets/js/store.js"></script>
+<script src="assets/js/modal.js"></script>
+<script src="assets/js/contextmenu.js"></script>
+<script src="assets/js/app.js"></script>
+<script src="assets/js/widgets.js"></script>
+<script src="assets/js/calendar.js"></script>
+</body>
+</html>

@@ -1,7 +1,3 @@
-# Runtime uploads (app logos). Keep only the folder-protection file.
-uploads/*
-!uploads/.htaccess
-
 # OS / editor noise
 Thumbs.db
 .DS_Store

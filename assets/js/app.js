@@ -23,7 +23,7 @@
 
   // Sorted client-side on the loaded rows so switching never re-queries the API.
   var PRIO_RANK = { high: 0, medium: 1, low: 2 };
-  var STATUS_RANK = { doing: 0, todo: 1, done: 2 };
+  var STATUS_RANK = { todo: 0, done: 1 };
   var SORTS = [
     { key: 'new', lang: 'sort_new', cmp: function (a, b) { return b.id - a.id; } },
     { key: 'old', lang: 'sort_old', cmp: function (a, b) { return a.id - b.id; } },
@@ -328,7 +328,7 @@
       },
       {
         name: 'status', label: t('status'), type: 'select', value: k ? k.status : 'todo',
-        options: [{ value: 'todo', label: t('todo') }, { value: 'doing', label: t('doing') }, { value: 'done', label: t('done') }]
+        options: [{ value: 'todo', label: t('todo') }, { value: 'done', label: t('done') }]
       }
     ];
   }
@@ -366,7 +366,6 @@
       { icon: '✏️', label: t('edit_task'), onSelect: function () { editTask(task); } },
       '-',
       { icon: '○', label: t('mark_todo'), onSelect: function () { setStatus(task, 'todo'); } },
-      { icon: '◐', label: t('mark_doing'), onSelect: function () { setStatus(task, 'doing'); } },
       { icon: '●', label: t('mark_done'), onSelect: function () { setStatus(task, 'done'); } },
       '-',
       { icon: '🗑️', label: t('delete_task'), danger: true, onSelect: function () { deleteTask(task); } }
@@ -391,7 +390,7 @@
       ul.innerHTML = '';
       rows.forEach(function (task) {
         var li = document.createElement('li');
-        li.className = 'item task-item';
+        li.className = 'item task-item' + (task.status === 'done' ? ' done' : '');
 
         var prio = document.createElement('span');
         prio.className = 'prio ' + task.priority;
